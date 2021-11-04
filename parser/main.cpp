@@ -4,11 +4,11 @@
 
 // parser -i /home/albert/my_husband.caff -o /home/albert/gifs/my_husband.caff
 int main(int argv, const char* argc[]) {
-    assert(argv == 4);
-    assert(std::string(argc[0]) == "-i");
-    const std::string inPath{argc[1]};
-    assert(std::string(argc[2]) == "-o");
-    const std::string outPath{argc[3]};
+    assert(argv == 5);
+    assert(std::string(argc[1]) == "-i");
+    const std::string inPath{argc[2]};
+    assert(std::string(argc[3]) == "-o");
+    const std::string outPath{argc[4]};
 
-    CaffParser::generateGifFrom(inPath, outPath);
+    return CaffParser::generateGifFrom(inPath, outPath);
 }

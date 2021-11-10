@@ -2,7 +2,6 @@
 #include <cassert>
 #include "CaffParser.h"
 
-// parser -i /home/albert/my_husband.caff -o /home/albert/gifs/my_husband.caff
 int main(int argv, const char* argc[]) {
     assert(argv == 5);
     assert(std::string(argc[1]) == "-i");

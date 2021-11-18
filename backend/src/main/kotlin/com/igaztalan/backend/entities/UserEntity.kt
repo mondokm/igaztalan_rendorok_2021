@@ -8,7 +8,7 @@ class UserEntity(
 
     val password: String,
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     val roles: List<RoleEntity>
 ){
     @Id

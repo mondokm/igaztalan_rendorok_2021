@@ -4,8 +4,6 @@ import com.igaztalan.backend.entities.UserEntity
 import com.igaztalan.backend.mapper.UserMapper
 import com.igaztalan.backend.model.BusinessUserDTO
 import com.igaztalan.backend.model.RegistrationDTO
-import com.igaztalan.backend.model.LoginRequestDTO
-import com.igaztalan.backend.model.LoginResponseDTO
 import com.igaztalan.backend.repositories.RoleRepository
 import com.igaztalan.backend.repositories.UserRepository
 import com.igaztalan.backend.security.SecurityConstants.ROLE_USER
@@ -23,12 +21,6 @@ class UserController(
 ) {
 
     private val logger = LoggerFactory.getLogger(this.javaClass)
-
-    @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequestDTO): LoginResponseDTO {
-        logger.info("${request.username} ${request.password}")
-        return LoginResponseDTO("asd")
-    }
 
     @GetMapping("/hello")
     fun hello() {

@@ -3,7 +3,8 @@ package com.igaztalan.backend.security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.igaztalan.backend.entities.UserEntity
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.igaztalan.backend.model.LoginRequestDTO
 import com.igaztalan.backend.repositories.UserRepository
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -27,7 +28,7 @@ class JWTAuthenticationFilter(
 ): UsernamePasswordAuthenticationFilter(authenticationManager) {
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
-        val user = ObjectMapper().readValue(request.inputStream, UserEntity::class.java)
+        val user = jacksonObjectMapper().readValue(request.inputStream, LoginRequestDTO::class.java)
         return authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
                 user.name,
@@ -50,6 +51,6 @@ class JWTAuthenticationFilter(
             .sign(Algorithm.HMAC512(SECRET.toByteArray()))
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
         response.addHeader("isAdmin", if (user.authorities.contains(SimpleGrantedAuthority(ROLE_ADMIN))) "1" else "0")
-        response.addHeader("userId", userRepository.findByName(user.username).id.toString())
+        response.addHeader("userId", userRepository.findByName(user.username)?.id.toString())
     }
 }

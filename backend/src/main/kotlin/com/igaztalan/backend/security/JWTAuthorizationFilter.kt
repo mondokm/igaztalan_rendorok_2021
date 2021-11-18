@@ -2,6 +2,7 @@ package com.igaztalan.backend.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.JWTDecodeException
 import com.igaztalan.backend.repositories.UserRepository
 import com.igaztalan.backend.security.SecurityConstants.HEADER_STRING
 import com.igaztalan.backend.security.SecurityConstants.SECRET
@@ -40,18 +41,22 @@ class JWTAuthorizationFilter(
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
         val token = request.getHeader(HEADER_STRING)
 
-        if (token != null){
-            val user = JWT.require(Algorithm.HMAC512(SECRET.toByteArray()))
-                .build()
-                .verify(token.replace(TOKEN_PREFIX, ""))
-                .subject
+        if (token != null) {
+            try {
+                val user = JWT.require(Algorithm.HMAC512(SECRET.toByteArray()))
+                    .build()
+                    .verify(token.replace(TOKEN_PREFIX, ""))
+                    .subject
 
-            val appUser = userRepository.findByName(user)
-            return UsernamePasswordAuthenticationToken(
-                user,
-                "",
-                appUser.roles.map { SimpleGrantedAuthority(it.name) }.toList()
-            )
+                val appUser = userRepository.findByName(user)
+                if (appUser != null) return UsernamePasswordAuthenticationToken(
+                    user,
+                    "",
+                    appUser.roles.map { SimpleGrantedAuthority(it.name) }.toList()
+                )
+            } catch (e: JWTDecodeException) {
+                return null
+            }
         }
 
         return null

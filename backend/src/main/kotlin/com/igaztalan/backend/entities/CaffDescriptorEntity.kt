@@ -3,20 +3,20 @@ package com.igaztalan.backend.entities
 import javax.persistence.*
 
 @Entity
-class CaffDescriptorEntity{
+class CaffDescriptorEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
-    
-    var name: String = ""
+    val id: Long,
+
+    var name: String,
 
     @OneToOne
-    var creator: UserEntity = UserEntity()
+    var creator: UserEntity,
 
     @ElementCollection
-    var keywords: List<String> = listOf()
+    var keywords: List<String>,
 
     @OneToMany
-    var comments: List<CommentEntity> = listOf()
-}
+    var comments: List<CommentEntity>,
+)
 

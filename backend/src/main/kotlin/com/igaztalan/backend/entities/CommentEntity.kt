@@ -3,15 +3,15 @@ package com.igaztalan.backend.entities
 import javax.persistence.*
 
 @Entity
-class CommentEntity {
+class CommentEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
+    val id: Long,
 
     @OneToOne
-    var author = UserEntity()
+    val author: UserEntity,
 
-    var message: String = ""
+    val message: String,
 
-    var timestamp: Long = 0
-}
+    val timestamp: Long,
+)

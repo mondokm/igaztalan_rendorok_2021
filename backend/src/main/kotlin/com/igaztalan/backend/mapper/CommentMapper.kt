@@ -11,7 +11,7 @@ class CommentMapper(private val userMapper: UserMapper) {
         id = entity.id,
         message = entity.message,
         timestamp = entity.timestamp,
-        author = userMapper.map(entity.author)
+        author = userMapper.mapToBusiness(entity.author)
     )
 
 }

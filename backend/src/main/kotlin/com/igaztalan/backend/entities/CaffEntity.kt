@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 class CaffEntity(
-    val name: String,
+    val title: String,
 
     @OneToOne
     val creator: UserEntity,

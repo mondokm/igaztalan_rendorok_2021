@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class CaffMapper(private val commentMapper: CommentMapper) {
 
     fun mapToDescriptor(entity: CaffEntity) = CaffDescriptorDTO(
-        name = entity.name,
+        name = entity.title,
         id = entity.id,
         creatorId = entity.creator.id,
         keywords = entity.keywords,

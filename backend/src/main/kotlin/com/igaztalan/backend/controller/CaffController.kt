@@ -42,15 +42,17 @@ class CaffController(
 
     @PostMapping("/upload")
     fun upload(@RequestBody caffUploadDTO: CaffUploadDTO): CaffDescriptorDTO?{
-        val creator = userRepository.findById(caffUploadDTO.creatorId).toNullable() ?: return null
-        return caffRepository.save(CaffEntity(
-            name = caffUploadDTO.name,
-            comments = mutableListOf(),
-            keywords = caffUploadDTO.keywords,
-            base64Caff = caffUploadDTO.base64Caff,
-            base64Preview = generateBase64Preview(caffUploadDTO.base64Caff),
-            creator = creator,
-        )).let{caffMapper.mapToDescriptor(it)}
+        caffUploadDTO.run {
+            val creator = userRepository.findById(creatorId).toNullable() ?: return null
+            return caffRepository.save(CaffEntity(
+                title = title,
+                comments = mutableListOf(),
+                keywords = keywords,
+                base64Caff = base64Caff,
+                base64Preview = generateBase64Preview(base64Caff = base64Caff, name = title),
+                creator = creator,
+            )).let{caffMapper.mapToDescriptor(it)}
+        }
     }
 
     @PostMapping("/comment")

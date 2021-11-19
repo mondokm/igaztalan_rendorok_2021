@@ -4,14 +4,17 @@ import javax.persistence.*
 
 @Entity
 class CommentEntity (
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     @OneToOne
     val author: UserEntity,
 
     val message: String,
 
     val timestamp: Long,
-)
+
+    @OneToOne
+    val caff: CaffEntity
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+}

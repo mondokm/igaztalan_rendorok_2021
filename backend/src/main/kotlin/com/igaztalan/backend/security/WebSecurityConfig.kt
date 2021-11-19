@@ -29,7 +29,8 @@ class WebSecurityConfig(
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
             .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-            .anyRequest().authenticated()
+//            .anyRequest().authenticated()
+            .anyRequest().permitAll() // TODO
             .and()
             .addFilter(JWTAuthenticationFilter(authenticationManager(), userRepository))
             .addFilter(JWTAuthorizationFilter(authenticationManager(), userRepository))

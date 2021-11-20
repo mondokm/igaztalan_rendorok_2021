@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.5.31"
     kotlin("plugin.spring") version "1.5.31"
+    kotlin("plugin.jpa") version "1.5.31"
 }
 
 group = "com.igaztalan"
@@ -16,14 +17,17 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.springframework.boot:spring-boot-starter-security:2.5.6")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.5.6")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    runtimeOnly("com.h2database:h2")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.security:spring-security-test")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.6")
+    implementation("com.auth0:java-jwt:3.18.2")
+    implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.5.21")
+    runtimeOnly("com.h2database:h2:1.4.200")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.6")
+    testImplementation("org.springframework.security:spring-security-test:5.5.1")
 }
 
 tasks.withType<KotlinCompile> {

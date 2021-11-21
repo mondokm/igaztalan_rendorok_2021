@@ -1,7 +1,7 @@
 package com.igaztalan.backend.model
 
 data class CaffDescriptorDTO(
-    val name: String,
+    val title: String,
     val id: Long,
     val creatorId: Long,
     val base64Preview: String,

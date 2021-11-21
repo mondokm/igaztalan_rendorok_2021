@@ -65,12 +65,12 @@ class CaffController(
     fun uploadComment(@RequestBody commentUploadDTO: CommentUploadDTO): CommentDTO? {
         val author = userRepository.findById(commentUploadDTO.authorId).toNullable() ?: return null
         val caff = caffRepository.findById(commentUploadDTO.caffId).toNullable() ?: return null
-        val comment = CommentEntity(
+        val comment = commentRepository.save(CommentEntity(
             author = author,
             message = commentUploadDTO.message,
             timestamp = commentUploadDTO.timestamp,
             caff = caff
-        )
+        ))
         caff.comments.add(comment)
         caffRepository.save(caff)
         return commentMapper.map(comment)

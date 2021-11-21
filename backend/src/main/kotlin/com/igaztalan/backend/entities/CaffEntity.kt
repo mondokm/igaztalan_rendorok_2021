@@ -14,10 +14,6 @@ class CaffEntity(
 
     @OneToMany
     val comments: MutableList<CommentEntity>,
-
-    val base64Caff: String,
-
-    val base64Preview: String,
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

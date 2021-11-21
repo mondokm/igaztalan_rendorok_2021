@@ -41,13 +41,23 @@ fun runParser(inputFileName: String, outputFileName: String) {
     }
 }
 
-fun generateBase64Preview(base64Caff: String, name: String): String {
-    val inputPath = "$WORKING_PATH/$name.caff"
-    val outputPath = "$WORKING_PATH/$name.gif"
+fun saveCaffAndPreview(base64Caff: String, id: Long): Int {
+    val inputPath = "$WORKING_PATH/$id.caff"
+    val outputPath = "$WORKING_PATH/$id.gif"
 
     File(inputPath).writeBytes(base64Caff.decodeBase64())
 
     runParser(inputPath, outputPath)
 
-    return File(outputPath).encodeToBase64().also { println("File: $it") }
+    return 0;
+}
+
+fun readCaff(id: Long): String {
+    val path = "$WORKING_PATH/$id.caff"
+    return File(path).encodeToBase64()
+}
+
+fun readPreview(id: Long): String {
+    val path = "$WORKING_PATH/$id.gif"
+    return File(path).encodeToBase64()
 }

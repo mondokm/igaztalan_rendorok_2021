@@ -8,8 +8,7 @@ import com.igaztalan.backend.model.*
 import com.igaztalan.backend.repositories.UserRepository
 import com.igaztalan.backend.repositories.CaffRepository
 import com.igaztalan.backend.repositories.CommentRepository
-import com.igaztalan.backend.util.generateBase64Preview
-import com.igaztalan.backend.util.toNullable
+import com.igaztalan.backend.util.*
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
@@ -27,31 +26,38 @@ class CaffController(
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
     @GetMapping("/descriptor")
-    fun getAll() = CaffDescriptorListDTO(caffRepository.findAll().map(caffMapper::mapToDescriptor).toList())
+    fun getAll() = CaffDescriptorListDTO(caffRepository.findAll().map{
+        val base64Preview = readPreview(it.id)
+        caffMapper.mapToDescriptor(it, base64Preview)
+    }.toList())
 
     @GetMapping("/descriptor/{id}")
     fun getDescriptorById(@PathVariable id: Long): CaffDescriptorDTO? =
-        caffRepository.findById(id).toNullable()?.let{caffMapper.mapToDescriptor(it)}
+        caffRepository.findById(id).toNullable()?.let{
+            val base64Preview = readPreview(it.id)
+            return caffMapper.mapToDescriptor(it, base64Preview)
+        }
 
     @GetMapping("/full/{id}")
     fun getFullById(@PathVariable id: Long): CaffFullDTO? =
         caffRepository.findById(id).toNullable()?.let{
-            logger.info("$it")
-            caffMapper.mapToFull(it)
+            val base64Caff = readCaff(it.id)
+            return CaffFullDTO(base64Caff)
         }
 
     @PostMapping("/upload")
     fun upload(@RequestBody caffUploadDTO: CaffUploadDTO): CaffDescriptorDTO?{
         caffUploadDTO.run {
             val creator = userRepository.findById(creatorId).toNullable() ?: return null
-            return caffRepository.save(CaffEntity(
+            val entity = caffRepository.save(CaffEntity(
                 title = title,
                 comments = mutableListOf(),
                 keywords = keywords,
-                base64Caff = base64Caff,
-                base64Preview = generateBase64Preview(base64Caff = base64Caff, name = title),
                 creator = creator,
-            )).let{caffMapper.mapToDescriptor(it)}
+            ))
+            saveCaffAndPreview(caffUploadDTO.base64Caff, entity.id);
+            val base64Preview = readPreview(entity.id)
+            return caffMapper.mapToDescriptor(entity, base64Preview)
         }
     }
 
@@ -77,7 +83,10 @@ class CaffController(
     @GetMapping("/find")
     fun search(@RequestParam keyword: String) =
         CaffDescriptorListDTO(
-            caffs = caffRepository.findByKeyword(keyword).map(caffMapper::mapToDescriptor)
+            caffs = caffRepository.findByKeyword(keyword).map{
+                val base64Preview = readPreview(it.id)
+                caffMapper.mapToDescriptor(it, base64Preview)
+            }
         )
 
 }

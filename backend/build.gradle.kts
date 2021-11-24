@@ -47,3 +47,6 @@ tasks.withType<Jar> {
     }
 }
 
+springBoot {
+    mainClass.set("com.igaztalan.backend.BackendApplicationKt")
+}

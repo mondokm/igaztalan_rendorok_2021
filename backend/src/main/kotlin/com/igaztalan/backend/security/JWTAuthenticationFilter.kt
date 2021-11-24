@@ -52,5 +52,7 @@ class JWTAuthenticationFilter(
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
         response.addHeader("isAdmin", if (user.authorities.contains(SimpleGrantedAuthority(ROLE_ADMIN))) "1" else "0")
         response.addHeader("userId", userRepository.findByName(user.username)?.id.toString())
+        response.writer.write(token)
+        response.writer.flush()
     }
 }

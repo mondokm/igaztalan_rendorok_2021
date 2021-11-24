@@ -41,11 +41,11 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "com.igaztalan.backend.BackendApplicationKt"
-    }
-}
+//tasks.withType<Jar> {
+//    manifest {
+//        attributes["Main-Class"] = "com.igaztalan.backend.BackendApplicationKt"
+//    }
+//}
 
 springBoot {
     mainClass.set("com.igaztalan.backend.BackendApplicationKt")

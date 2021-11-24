@@ -43,7 +43,7 @@ tasks.withType<Test> {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "com.igaztalan.backend.BackendApplication"
+        attributes["Main-Class"] = "com.igaztalan.backend.BackendApplicationKt"
     }
 }
 

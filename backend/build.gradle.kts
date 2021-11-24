@@ -41,6 +41,9 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-springBoot {
-    mainClass.set("com.igaztalan.backend.BackendApplication")
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.igaztalan.backend.BackendApplication"
+    }
 }
+

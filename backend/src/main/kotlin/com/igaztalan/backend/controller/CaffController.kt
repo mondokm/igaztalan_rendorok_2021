@@ -10,8 +10,10 @@ import com.igaztalan.backend.repositories.CaffRepository
 import com.igaztalan.backend.repositories.CommentRepository
 import com.igaztalan.backend.util.*
 import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import java.io.IOException
 
 @RestController
 @RequestMapping("/caff")
@@ -23,57 +25,70 @@ class CaffController(
     private val commentMapper: CommentMapper,
 ) {
 
-    private val logger = LoggerFactory.getLogger(this.javaClass)
-
     @GetMapping("/descriptor")
-    fun getAll() = CaffDescriptorListDTO(caffRepository.findAll().map{
-        val base64Preview = readPreview(it.id)
+    fun getAll() = ResponseEntity.ok(CaffDescriptorListDTO(caffRepository.findAll().map {
+        val base64Preview = try {
+            readPreview(it.id)
+        } catch (e: IOException) {
+            return ResponseEntity.internalServerError().build<CaffDescriptorListDTO>()
+        }
         caffMapper.mapToDescriptor(it, base64Preview)
-    }.toList())
+    }.toList()))
 
     @GetMapping("/descriptor/{id}")
-    fun getDescriptorById(@PathVariable id: Long): CaffDescriptorDTO? =
-        caffRepository.findById(id).toNullable()?.let{
+    fun getDescriptorById(@PathVariable id: Long): ResponseEntity<CaffDescriptorDTO> =
+        caffRepository.findById(id).toNullable()?.let {
             val base64Preview = readPreview(it.id)
-            return caffMapper.mapToDescriptor(it, base64Preview)
-        }
+            ResponseEntity.ok(caffMapper.mapToDescriptor(it, base64Preview))
+        } ?: ResponseEntity.notFound().build()
 
     @GetMapping("/full/{id}")
-    fun getFullById(@PathVariable id: Long): CaffFullDTO? =
-        caffRepository.findById(id).toNullable()?.let{
+    fun getFullById(@PathVariable id: Long): ResponseEntity<CaffFullDTO> =
+        caffRepository.findById(id).toNullable()?.let {
             val base64Caff = readCaff(it.id)
-            return CaffFullDTO(base64Caff)
-        }
+            ResponseEntity.ok(CaffFullDTO(base64Caff))
+        } ?: ResponseEntity.notFound().build()
 
     @PostMapping("/upload")
-    fun upload(@RequestBody caffUploadDTO: CaffUploadDTO): CaffDescriptorDTO?{
+    fun upload(@RequestBody caffUploadDTO: CaffUploadDTO): ResponseEntity<CaffDescriptorDTO> {
         caffUploadDTO.run {
-            val creator = userRepository.findById(creatorId).toNullable() ?: return null
-            val entity = caffRepository.save(CaffEntity(
-                title = title,
-                comments = mutableListOf(),
-                keywords = keywords,
-                creator = creator,
-            ))
-            saveCaffAndPreview(caffUploadDTO.base64Caff, entity.id);
-            val base64Preview = readPreview(entity.id)
-            return caffMapper.mapToDescriptor(entity, base64Preview)
+            val creator = userRepository.findById(creatorId).toNullable() ?: return ResponseEntity.badRequest().build()
+            val entity = caffRepository.save(
+                CaffEntity(
+                    title = title,
+                    comments = mutableListOf(),
+                    keywords = keywords,
+                    creator = creator,
+                )
+            )
+            try {
+                saveCaffAndPreview(caffUploadDTO.base64Caff, entity.id)
+                val base64Preview = readPreview(entity.id)
+                return ResponseEntity.ok(caffMapper.mapToDescriptor(entity, base64Preview))
+            } catch (e: ParserException) {
+                return ResponseEntity.internalServerError().build()
+            }
         }
     }
 
     @PostMapping("/comment")
-    fun uploadComment(@RequestBody commentUploadDTO: CommentUploadDTO): CommentDTO? {
-        val author = userRepository.findById(commentUploadDTO.authorId).toNullable() ?: return null
-        val caff = caffRepository.findById(commentUploadDTO.caffId).toNullable() ?: return null
-        val comment = commentRepository.save(CommentEntity(
-            author = author,
-            message = commentUploadDTO.message,
-            timestamp = commentUploadDTO.timestamp,
-            caff = caff
-        ))
+    fun uploadComment(@RequestBody commentUploadDTO: CommentUploadDTO): ResponseEntity<CommentDTO> {
+        val author =
+            userRepository.findById(commentUploadDTO.authorId).toNullable() ?: return ResponseEntity.badRequest()
+                .build()
+        val caff =
+            caffRepository.findById(commentUploadDTO.caffId).toNullable() ?: return ResponseEntity.badRequest().build()
+        val comment = commentRepository.save(
+            CommentEntity(
+                author = author,
+                message = commentUploadDTO.message,
+                timestamp = commentUploadDTO.timestamp,
+                caff = caff
+            )
+        )
         caff.comments.add(comment)
         caffRepository.save(caff)
-        return commentMapper.map(comment)
+        return ResponseEntity.ok(commentMapper.map(comment))
     }
 
     @DeleteMapping("/{id}")
@@ -82,11 +97,15 @@ class CaffController(
 
     @GetMapping("/find")
     fun search(@RequestParam keyword: String) =
-        CaffDescriptorListDTO(
-            caffs = caffRepository.findByKeyword(keyword).map{
-                val base64Preview = readPreview(it.id)
+        ResponseEntity.ok(CaffDescriptorListDTO(
+            caffs = caffRepository.findByKeyword(keyword).map {
+                val base64Preview = try {
+                    readPreview(it.id)
+                } catch (e: IOException) {
+                    return ResponseEntity.internalServerError().build<CaffDescriptorListDTO>()
+                }
                 caffMapper.mapToDescriptor(it, base64Preview)
             }
-        )
+        ))
 
 }

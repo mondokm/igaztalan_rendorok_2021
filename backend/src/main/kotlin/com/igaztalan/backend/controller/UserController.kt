@@ -9,6 +9,7 @@ import com.igaztalan.backend.repositories.UserRepository
 import com.igaztalan.backend.security.SecurityConstants.ROLE_USER
 import com.igaztalan.backend.util.toNullable
 import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
@@ -23,18 +24,19 @@ class UserController(
     private val userMapper: UserMapper
 ) {
 
-    private val logger = LoggerFactory.getLogger(this.javaClass)
-
     @PostMapping("/sign-up")
-    fun signUp(@RequestBody user: RegistrationDTO): BusinessUserDTO =
-        // TODO check if user already exists
-        userRepository.save(
-            UserEntity(
-                name = user.name,
-                password = passwordEncoder.encode(user.password),
-                roles = listOf(roleRepository.findByName(ROLE_USER))
-            )
-        ).let(userMapper::mapToBusiness)
+    fun signUp(@RequestBody user: RegistrationDTO): ResponseEntity<BusinessUserDTO> {
+        if (userRepository.existsByName(user.name)) return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(
+            userRepository.save(
+                UserEntity(
+                    name = user.name,
+                    password = passwordEncoder.encode(user.password),
+                    roles = listOf(roleRepository.findByName(ROLE_USER))
+                )
+            ).let(userMapper::mapToBusiness)
+        )
+    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -42,7 +44,8 @@ class UserController(
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    fun update(@RequestBody user: RegistrationDTO, @PathVariable id: Long){
+    fun update(@RequestBody user: RegistrationDTO, @PathVariable id: Long): ResponseEntity<BusinessUserDTO> {
+        if (userRepository.existsByName(user.name)) return ResponseEntity.badRequest().build()
         val user = UserEntity(
             name = user.name,
             password = passwordEncoder.encode(user.password),
@@ -50,7 +53,7 @@ class UserController(
         )
         userRepository.deleteById(id)
         user.id = id;
-        return userRepository.save(user).let {userMapper.mapToBusiness(it)}
+        return ResponseEntity.ok(userRepository.save(user).let{userMapper.mapToBusiness(it)})
     }
 
 }

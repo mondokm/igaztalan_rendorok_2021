@@ -7,6 +7,4 @@
 
 import Combine
 
-final class UploadViewModel: ViewModel, ObservableObject {
-    @Injected var imageService: ImageActionProtocol
-}
+final class UploadViewModel: ViewModel, ObservableObject { }

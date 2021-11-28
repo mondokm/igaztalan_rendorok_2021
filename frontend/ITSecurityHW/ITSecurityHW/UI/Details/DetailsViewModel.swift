@@ -17,9 +17,8 @@ final class DetailsViewModel: ViewModel, ObservableObject {
 
     override init() {
         super.init()
-
         imageDetailStore.getImageDetail()
-            .sink { [weak self] image in  self?.image = image }
+            .sink { [weak self] in self?.image = $0 }
             .store(in: &cancellables)
     }
 }

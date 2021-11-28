@@ -79,3 +79,9 @@ extension Caff: Identifiable {
         _id
     }
 }
+
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView(searchViewModel: SearchViewModel())
+    }
+}

@@ -7,4 +7,4 @@
 
 import Combine
 
-final class MainViewModel: ObservableObject { }
+final class MainViewModel: ViewModel, ObservableObject { }

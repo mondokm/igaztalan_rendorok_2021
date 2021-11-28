@@ -13,7 +13,6 @@ final class SearchViewModel: ViewModel, ObservableObject {
 
     override init() {
         super.init()
-
         searchStore.getImages()
             .sink { [weak self] in self?.images = $0 }
             .store(in: &cancellables)

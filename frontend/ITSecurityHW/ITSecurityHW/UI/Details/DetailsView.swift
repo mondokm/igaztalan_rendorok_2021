@@ -83,6 +83,27 @@ struct DetailsView: View {
     }
 }
 
+struct DetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+        DetailsView(detailViewModel: DetailsViewModel(),
+                    image: CaffWithoutComments(title: "Title",
+                                               _id: 0,
+                                               creatorId: 1,
+                                               keywords: ["keyword1", "keyword2"],
+                                               base64Preview: "",
+                                               comments: [CommentResponse(_id: 2,
+                                                                          caffId: 3,
+                                                                          author: Author(name: "Author1", _id: 4),
+                                                                          message: "Message1",
+                                                                          timestamp: 5),
+                                                          CommentResponse(_id: 6,
+                                                                          caffId: 7,
+                                                                          author: Author(name: "Author2", _id: 8),
+                                                                          message: "Message2",
+                                                                          timestamp: 9)]))
+    }
+}
+
 extension CommentResponse: Identifiable {
     public var id: Int {
         _id

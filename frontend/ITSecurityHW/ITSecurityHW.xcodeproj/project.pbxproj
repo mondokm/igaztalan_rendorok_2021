@@ -10,9 +10,6 @@
 		5822BE4A27302EE8002C88EA /* ITSecurityHWApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822BE4927302EE8002C88EA /* ITSecurityHWApp.swift */; };
 		5822BE4E27302EEA002C88EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5822BE4D27302EEA002C88EA /* Assets.xcassets */; };
 		5822BE5127302EEA002C88EA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5822BE5027302EEA002C88EA /* Preview Assets.xcassets */; };
-		5822BE5B27302EEA002C88EA /* ITSecurityHWTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822BE5A27302EEA002C88EA /* ITSecurityHWTests.swift */; };
-		5822BE6527302EEA002C88EA /* ITSecurityHWUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822BE6427302EEA002C88EA /* ITSecurityHWUITests.swift */; };
-		5822BE6727302EEA002C88EA /* ITSecurityHWUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822BE6627302EEA002C88EA /* ITSecurityHWUITestsLaunchTests.swift */; };
 		5822BE7D2730301D002C88EA /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 5822BE7C2730301D002C88EA /* Swinject */; };
 		5822BE82273030A6002C88EA /* Injected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822BE81273030A6002C88EA /* Injected.swift */; };
 		5822BE84273030BD002C88EA /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822BE83273030BD002C88EA /* DependencyInjector.swift */; };
@@ -97,31 +94,12 @@
 		9D0FFE672752EC8700878C04 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9D0FFE662752EC8700878C04 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		5822BE5727302EEA002C88EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5822BE3E27302EE7002C88EA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5822BE4527302EE7002C88EA;
-			remoteInfo = ITSecurityHW;
-		};
-		5822BE6127302EEA002C88EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5822BE3E27302EE7002C88EA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5822BE4527302EE7002C88EA;
-			remoteInfo = ITSecurityHW;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		5822BE4627302EE7002C88EA /* ITSecurityHW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITSecurityHW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5822BE4927302EE8002C88EA /* ITSecurityHWApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITSecurityHWApp.swift; sourceTree = "<group>"; };
 		5822BE4D27302EEA002C88EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5822BE5027302EEA002C88EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5822BE5627302EEA002C88EA /* ITSecurityHWTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ITSecurityHWTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5822BE5A27302EEA002C88EA /* ITSecurityHWTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITSecurityHWTests.swift; sourceTree = "<group>"; };
-		5822BE6027302EEA002C88EA /* ITSecurityHWUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ITSecurityHWUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5822BE6427302EEA002C88EA /* ITSecurityHWUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITSecurityHWUITests.swift; sourceTree = "<group>"; };
 		5822BE6627302EEA002C88EA /* ITSecurityHWUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITSecurityHWUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5822BE81273030A6002C88EA /* Injected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injected.swift; sourceTree = "<group>"; };
@@ -217,20 +195,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5822BE5327302EEA002C88EA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5822BE5D27302EEA002C88EA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -248,8 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				5822BE4627302EE7002C88EA /* ITSecurityHW.app */,
-				5822BE5627302EEA002C88EA /* ITSecurityHWTests.xctest */,
-				5822BE6027302EEA002C88EA /* ITSecurityHWUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -651,42 +613,6 @@
 			productReference = 5822BE4627302EE7002C88EA /* ITSecurityHW.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5822BE5527302EEA002C88EA /* ITSecurityHWTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5822BE6D27302EEA002C88EA /* Build configuration list for PBXNativeTarget "ITSecurityHWTests" */;
-			buildPhases = (
-				5822BE5227302EEA002C88EA /* Sources */,
-				5822BE5327302EEA002C88EA /* Frameworks */,
-				5822BE5427302EEA002C88EA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5822BE5827302EEA002C88EA /* PBXTargetDependency */,
-			);
-			name = ITSecurityHWTests;
-			productName = ITSecurityHWTests;
-			productReference = 5822BE5627302EEA002C88EA /* ITSecurityHWTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5822BE5F27302EEA002C88EA /* ITSecurityHWUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5822BE7027302EEA002C88EA /* Build configuration list for PBXNativeTarget "ITSecurityHWUITests" */;
-			buildPhases = (
-				5822BE5C27302EEA002C88EA /* Sources */,
-				5822BE5D27302EEA002C88EA /* Frameworks */,
-				5822BE5E27302EEA002C88EA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5822BE6227302EEA002C88EA /* PBXTargetDependency */,
-			);
-			name = ITSecurityHWUITests;
-			productName = ITSecurityHWUITests;
-			productReference = 5822BE6027302EEA002C88EA /* ITSecurityHWUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -699,14 +625,6 @@
 				TargetAttributes = {
 					5822BE4527302EE7002C88EA = {
 						CreatedOnToolsVersion = 13.0;
-					};
-					5822BE5527302EEA002C88EA = {
-						CreatedOnToolsVersion = 13.0;
-						TestTargetID = 5822BE4527302EE7002C88EA;
-					};
-					5822BE5F27302EEA002C88EA = {
-						CreatedOnToolsVersion = 13.0;
-						TestTargetID = 5822BE4527302EE7002C88EA;
 					};
 				};
 			};
@@ -730,8 +648,6 @@
 			projectRoot = "";
 			targets = (
 				5822BE4527302EE7002C88EA /* ITSecurityHW */,
-				5822BE5527302EEA002C88EA /* ITSecurityHWTests */,
-				5822BE5F27302EEA002C88EA /* ITSecurityHWUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -746,20 +662,6 @@
 				5822BE5127302EEA002C88EA /* Preview Assets.xcassets in Resources */,
 				5822BE4E27302EEA002C88EA /* Assets.xcassets in Resources */,
 				58CA5AD9274EF9A00058D8EC /* 3.caff in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5822BE5427302EEA002C88EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5822BE5E27302EEA002C88EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,37 +771,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5822BE5227302EEA002C88EA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5822BE5B27302EEA002C88EA /* ITSecurityHWTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5822BE5C27302EEA002C88EA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5822BE6727302EEA002C88EA /* ITSecurityHWUITestsLaunchTests.swift in Sources */,
-				5822BE6527302EEA002C88EA /* ITSecurityHWUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5822BE5827302EEA002C88EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5822BE4527302EE7002C88EA /* ITSecurityHW */;
-			targetProxy = 5822BE5727302EEA002C88EA /* PBXContainerItemProxy */;
-		};
-		5822BE6227302EEA002C88EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5822BE4527302EE7002C88EA /* ITSecurityHW */;
-			targetProxy = 5822BE6127302EEA002C88EA /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5822BE6827302EEA002C88EA /* Debug */ = {
@@ -1045,7 +917,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1076,99 +948,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		5822BE6E27302EEA002C88EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hu.bme.hit.itsec.hw.ITSecurityHWTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ITSecurityHW.app/ITSecurityHW";
-			};
-			name = Debug;
-		};
-		5822BE6F27302EEA002C88EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hu.bme.hit.itsec.hw.ITSecurityHWTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ITSecurityHW.app/ITSecurityHW";
-			};
-			name = Release;
-		};
-		5822BE7127302EEA002C88EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hu.bme.hit.itsec.hw.ITSecurityHWUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ITSecurityHW;
-			};
-			name = Debug;
-		};
-		5822BE7227302EEA002C88EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hu.bme.hit.itsec.hw.ITSecurityHWUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ITSecurityHW;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1189,24 +969,6 @@
 			buildConfigurations = (
 				5822BE6B27302EEA002C88EA /* Debug */,
 				5822BE6C27302EEA002C88EA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5822BE6D27302EEA002C88EA /* Build configuration list for PBXNativeTarget "ITSecurityHWTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5822BE6E27302EEA002C88EA /* Debug */,
-				5822BE6F27302EEA002C88EA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5822BE7027302EEA002C88EA /* Build configuration list for PBXNativeTarget "ITSecurityHWUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5822BE7127302EEA002C88EA /* Debug */,
-				5822BE7227302EEA002C88EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

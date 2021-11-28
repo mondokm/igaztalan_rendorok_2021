@@ -87,5 +87,6 @@ struct OpeningView: View {
 struct Navigation_Previews: PreviewProvider {
     static var previews: some View {
         OpeningView()
+            .environmentObject(AppState())
     }
 }

@@ -8,16 +8,12 @@
 import Combine
 
 final class GalleryViewModel: ViewModel, ObservableObject {
-    @Injected var imageService: ImageActionProtocol
-    @Published var images: [CaffWithoutComments] = [CaffWithoutComments]()
+    @Published var images = [CaffWithoutComments]()
 
     override init() {
         super.init()
-
         imageStore.getImages()
-            .sink { [weak self] images in
-                self?.images = images
-            }
+            .sink { [weak self] in self?.images = $0 }
             .store(in: &cancellables)
     }
 }

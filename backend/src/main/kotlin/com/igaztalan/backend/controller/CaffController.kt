@@ -30,6 +30,7 @@ class CaffController(
         val base64Preview = try {
             readPreview(it.id)
         } catch (e: IOException) {
+            e.printStackTrace()
             return ResponseEntity.internalServerError().build<CaffDescriptorListDTO>()
         }
         caffMapper.mapToDescriptor(it, base64Preview)
@@ -66,6 +67,7 @@ class CaffController(
                 val base64Preview = readPreview(entity.id)
                 return ResponseEntity.ok(caffMapper.mapToDescriptor(entity, base64Preview))
             } catch (e: ParserException) {
+                caffRepository.delete(entity)
                 return ResponseEntity.internalServerError().build()
             }
         }
@@ -86,8 +88,8 @@ class CaffController(
                 caff = caff
             )
         )
-        caff.comments.add(comment)
-        caffRepository.save(caff)
+//        caff.comments.add(comment)
+//        caffRepository.save(caff)
         return ResponseEntity.ok(commentMapper.map(comment))
     }
 

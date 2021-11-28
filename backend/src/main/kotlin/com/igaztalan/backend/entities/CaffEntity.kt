@@ -6,13 +6,14 @@ import javax.persistence.*
 class CaffEntity(
     val title: String,
 
-    @OneToOne
+    @ManyToOne(cascade = [CascadeType.REFRESH])
+    @JoinColumn
     val creator: UserEntity,
 
     @ElementCollection
     val keywords: List<String>,
 
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "caff")
     val comments: MutableList<CommentEntity>,
 ) {
     @Id

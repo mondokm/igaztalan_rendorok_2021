@@ -4,14 +4,16 @@ import javax.persistence.*
 
 @Entity
 class CommentEntity (
-    @OneToOne
+    @ManyToOne(cascade = [CascadeType.REFRESH])
+    @JoinColumn
     val author: UserEntity,
 
     val message: String,
 
     val timestamp: Long,
 
-    @OneToOne
+    @ManyToOne(cascade = [CascadeType.REFRESH])
+    @JoinColumn
     val caff: CaffEntity
 ) {
     @Id

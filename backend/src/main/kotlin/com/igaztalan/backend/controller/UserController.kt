@@ -32,7 +32,9 @@ class UserController(
                 UserEntity(
                     name = user.name,
                     password = passwordEncoder.encode(user.password),
-                    roles = listOf(roleRepository.findByName(ROLE_USER))
+                    roles = listOf(roleRepository.findByName(ROLE_USER)),
+                    caffs = mutableListOf(),
+                    comments = mutableListOf()
                 )
             ).let(userMapper::mapToBusiness)
         )
@@ -46,14 +48,17 @@ class UserController(
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     fun update(@RequestBody user: RegistrationDTO, @PathVariable id: Long): ResponseEntity<BusinessUserDTO> {
         if (userRepository.existsByName(user.name)) return ResponseEntity.badRequest().build()
-        val user = UserEntity(
+        val userEntity = userRepository.findById(id).toNullable() ?: return ResponseEntity.badRequest().build()
+        val newUserEntity = UserEntity(
             name = user.name,
             password = passwordEncoder.encode(user.password),
-            roles = listOf(roleRepository.findByName(ROLE_USER))
+            roles = listOf(roleRepository.findByName(ROLE_USER)),
+            caffs = userEntity.caffs,
+            comments = userEntity.comments
         )
         userRepository.deleteById(id)
-        user.id = id;
-        return ResponseEntity.ok(userRepository.save(user).let{userMapper.mapToBusiness(it)})
+        newUserEntity.id = id;
+        return ResponseEntity.ok(userRepository.save(newUserEntity).let{userMapper.mapToBusiness(it)})
     }
 
 }

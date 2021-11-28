@@ -33,7 +33,9 @@ class SetupLoader(
             UserEntity(
                 name = "admin",
                 password = passwordEncoder.encode("admin"),
-                roles = listOf(roleRepository.findByName(ROLE_ADMIN))
+                roles = listOf(roleRepository.findByName(ROLE_ADMIN)),
+                caffs = mutableListOf(),
+                comments = mutableListOf()
             )
         )
     }

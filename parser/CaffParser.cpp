@@ -42,8 +42,15 @@ Caff CaffParser::loadCaff(const std::filesystem::path& path) {
 std::vector<CaffParser::Block> CaffParser::caffToBlocks(Caff caff) {
     std::vector<CaffParser::Block> blocks;
     while (!caff.empty()) {
+        if (caff.size() < 9)
+            throw std::runtime_error("Out of bounds.");
+
         auto type = caff[0];
         auto length = bytesToLong({&caff[1], &caff[9]});
+
+        if (caff.size() < 9 + length)
+            throw std::runtime_error("Out of bounds.");
+
         std::vector<uint8_t> data = {&caff[9], &caff[10 + length - 1]};
 
         blocks.emplace_back(type = type, length = length, data = data);
@@ -67,6 +74,9 @@ void CaffParser::saveGif(const std::vector<Block>& ciffBlocks, const std::string
     for (const Block& block : ciffBlocks) {
         const auto& data = block.getData();
 
+        if (data.size() < 8 + 36)
+            throw std::runtime_error("Out of bounds.");
+
         unsigned long long msDuration = bytesToLong({&data[0], &data[8]});
 
         const std::vector<uint8_t> ciff = {&data[8], &data[data.size()]};
@@ -79,6 +89,9 @@ void CaffParser::saveGif(const std::vector<Block>& ciffBlocks, const std::string
         unsigned long long height = bytesToLong({&ciff[28], &ciff[36]});
 
 //        auto captionEndIndex = std::distance(ciff.begin(), std::find(ciff.begin() + 36, ciff.end(), '\n'));
+
+        if ((ciff.size() - headerLength) % 3 != 0)
+            throw std::runtime_error("Out of bounds.");
 
         std::vector<uint8_t> imageData = {};
         for (auto iter = ciff.begin() + headerLength; iter != ciff.end(); iter += 3) {
@@ -120,9 +133,10 @@ CaffParser::Block::Block(
     if (this->data.size() != this->length)
         throw std::runtime_error("Integrity check failed: block size mismatch");
 
-    if (type == Type::header && std::vector<uint8_t>(&this->data[0], &this->data[4]) != caffMagic()) {
-        throw std::runtime_error("Integrity check failed: CAFF magic missing in header block");
-    }
+    if (type == Type::header)
+        if (data.size() < 4 || std::vector<uint8_t>(&this->data[0], &this->data[4]) != caffMagic()) {
+            throw std::runtime_error("Integrity check failed: CAFF magic missing in header block");
+        }
 }
 
 CaffParser::Block::Type CaffParser::Block::getType() const {

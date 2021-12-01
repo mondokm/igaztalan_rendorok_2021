@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.igaztalan.backend.model.LoginRequestDTO
+import com.igaztalan.backend.model.TokenResponseDTO
 import com.igaztalan.backend.repositories.UserRepository
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -52,7 +53,7 @@ class JWTAuthenticationFilter(
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
         response.addHeader("isAdmin", if (user.authorities.contains(SimpleGrantedAuthority(ROLE_ADMIN))) "1" else "0")
         response.addHeader("userId", userRepository.findByName(user.username)?.id.toString())
-        response.writer.write(token)
+        response.writer.write("{ \"token\":\"$token\", \"isAdmin\":${if (user.authorities.contains(SimpleGrantedAuthority(ROLE_ADMIN))) 1 else 0}}")
         response.writer.flush()
     }
 }

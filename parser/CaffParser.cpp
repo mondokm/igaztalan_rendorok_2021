@@ -116,7 +116,7 @@ CaffParser::Block::Block(
         unsigned int type,
         unsigned long long length,
         std::vector<uint8_t> data
-): type{static_cast<Type>(type)}, length{length}, data{std::move(data)} {
+): type{fromInt(type)}, length{length}, data{std::move(data)} {
     if (this->data.size() != this->length)
         throw std::runtime_error("Integrity check failed: block size mismatch");
 
@@ -131,6 +131,17 @@ CaffParser::Block::Type CaffParser::Block::getType() const {
 
 const std::vector<uint8_t> &CaffParser::Block::getData() const {
     return data;
+}
+
+CaffParser::Block::Type CaffParser::Block::fromInt(unsigned int i) {
+    switch (i) {
+        case 0x1:
+        case 0x2:
+        case 0x3:
+            return Type(i);
+        default:
+            throw std::runtime_error("Invalid block type : " + std::to_string(i));
+    }
 }
 
 CaffParser::Frame::Frame(std::vector<uint8_t> imageData,

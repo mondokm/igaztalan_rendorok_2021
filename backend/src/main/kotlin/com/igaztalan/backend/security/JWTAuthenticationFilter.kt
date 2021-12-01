@@ -2,10 +2,8 @@ package com.igaztalan.backend.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.igaztalan.backend.model.LoginRequestDTO
-import com.igaztalan.backend.model.TokenResponseDTO
 import com.igaztalan.backend.repositories.UserRepository
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

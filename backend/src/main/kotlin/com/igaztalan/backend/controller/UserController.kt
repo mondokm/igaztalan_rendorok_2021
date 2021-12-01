@@ -8,6 +8,8 @@ import com.igaztalan.backend.repositories.RoleRepository
 import com.igaztalan.backend.repositories.UserRepository
 import com.igaztalan.backend.security.SecurityConstants.ROLE_USER
 import com.igaztalan.backend.util.toNullable
+import org.passay.PasswordData
+import org.passay.PasswordValidator
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -21,12 +23,14 @@ class UserController(
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val userMapper: UserMapper
+    private val userMapper: UserMapper,
+    private val validator: PasswordValidator,
 ) {
 
     @PostMapping("/sign-up")
     fun signUp(@RequestBody user: RegistrationDTO): ResponseEntity<BusinessUserDTO> {
         if (userRepository.existsByName(user.name)) return ResponseEntity.badRequest().build()
+        if (!validator.validate(PasswordData(user.password)).isValid) return ResponseEntity.badRequest().build()
         return ResponseEntity.ok(
             userRepository.save(
                 UserEntity(

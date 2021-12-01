@@ -51,6 +51,7 @@ class CaffController(
         } ?: ResponseEntity.notFound().build()
 
     @PostMapping("/upload")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @securityUtil.hasUserId(#authentication,#caffUploadDTO.creatorId)")
     fun upload(@RequestBody caffUploadDTO: CaffUploadDTO): ResponseEntity<CaffDescriptorDTO> {
         caffUploadDTO.run {
             val creator = userRepository.findById(creatorId).toNullable() ?: return ResponseEntity.badRequest().build()
@@ -66,14 +67,15 @@ class CaffController(
                 saveCaffAndPreview(caffUploadDTO.base64Caff, entity.id)
                 val base64Preview = readPreview(entity.id)
                 return ResponseEntity.ok(caffMapper.mapToDescriptor(entity, base64Preview))
-            } catch (e: ParserException) {
-                caffRepository.delete(entity)
+            } catch (e: Exception) {
+                caffRepository.findById(entity.id).map(caffRepository::delete)
                 return ResponseEntity.internalServerError().build()
             }
         }
     }
 
     @PostMapping("/comment")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @securityUtil.hasUserId(#authentication,#commentUploadDTO.authorId)")
     fun uploadComment(@RequestBody commentUploadDTO: CommentUploadDTO): ResponseEntity<CommentDTO> {
         val author =
             userRepository.findById(commentUploadDTO.authorId).toNullable() ?: return ResponseEntity.badRequest()

@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.6")
     implementation("com.auth0:java-jwt:3.18.2")
     implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.5.21")
+    implementation("org.passay:passay:1.6.0")
     runtimeOnly("com.h2database:h2:1.4.200")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.6")
     testImplementation("org.springframework.security:spring-security-test:5.5.1")

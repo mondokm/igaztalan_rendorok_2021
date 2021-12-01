@@ -2,7 +2,6 @@
 #include <utility>
 #include <iostream>
 #include <ranges>
-#include <cassert>
 #include "CaffParser.h"
 
 int CaffParser::generateGifFrom(const std::filesystem::path& inPath, const std::filesystem::path& outPath) {
@@ -12,20 +11,23 @@ int CaffParser::generateGifFrom(const std::filesystem::path& inPath, const std::
     if (!std::filesystem::exists(inPath))
         return -1;
 
-//    if (std::filesystem::exists(outPath))
-//        return 0;
-
     Caff caff = loadCaff(inPath);
+
+    if (caff.empty())
+        return -1;
 
     try {
         auto blocks = caffToBlocks(caff);
         auto numAnimations = getNumAnimations(blocks[0]);
 
         std::erase_if(blocks, [] (const Block& b) { return b.getType() != Block::animation; });
-        assert(blocks.size() == numAnimations);
+
+        if (blocks.size() != numAnimations)
+            throw std::runtime_error("Integrity check failed: invalid number of animation blocks");
+
         saveGif(blocks, outPath);
-    } catch (std::exception&) {
-        std::cout << "Invalid file format." << std::endl;
+    } catch (const std::exception& ex) {
+        std::cerr << ex.what() << std::endl;
         return -1;
     }
 
@@ -69,7 +71,8 @@ void CaffParser::saveGif(const std::vector<Block>& ciffBlocks, const std::string
 
         const std::vector<uint8_t> ciff = {&data[8], &data[data.size()]};
 
-        assert(std::vector<uint8_t>(&ciff[0], &ciff[4]) == Frame::ciffMagic());
+        if (std::vector<uint8_t>(&ciff[0], &ciff[4]) != Frame::ciffMagic())
+            throw std::runtime_error("Integrity check failed: CIFF magic missing in animation block");
 
         unsigned long long headerLength = bytesToLong({&ciff[4], &ciff[12]});
         unsigned long long width = bytesToLong({&ciff[20], &ciff[28]});
@@ -101,7 +104,9 @@ const std::vector<uint8_t> &CaffParser::caffMagic() {
 }
 
 unsigned long long CaffParser::getNumAnimations(const CaffParser::Block &firstBlock) {
-    assert(firstBlock.getType() == Block::header);
+    if (firstBlock.getType() != Block::header)
+        throw std::runtime_error("Integrity check failed: first block is not a header");
+
     const auto& data = firstBlock.getData();
     unsigned long long numAnimations = bytesToLong({&data[12], &data[20]});
     return numAnimations;
@@ -112,9 +117,11 @@ CaffParser::Block::Block(
         unsigned long long length,
         std::vector<uint8_t> data
 ): type{static_cast<Type>(type)}, length{length}, data{std::move(data)} {
-    assert(this->data.size() == this->length);
-    if (type == Type::header) {
-        assert(std::vector<uint8_t>(&this->data[0], &this->data[4]) == caffMagic());
+    if (this->data.size() != this->length)
+        throw std::runtime_error("Integrity check failed: block size mismatch");
+
+    if (type == Type::header && std::vector<uint8_t>(&this->data[0], &this->data[4]) != caffMagic()) {
+        throw std::runtime_error("Integrity check failed: CAFF magic missing in header block");
     }
 }
 
@@ -131,7 +138,8 @@ CaffParser::Frame::Frame(std::vector<uint8_t> imageData,
                          unsigned long long height,
                          unsigned long long msDuration
 ) : imageData(std::move(imageData)), width(width), height(height), msDuration(msDuration) {
-    assert(this->imageData.size() == width * height * 4);
+    if (this->imageData.size() != width * height * 4)
+        throw std::runtime_error("Integrity check failed: invalid number of pixels");
 }
 
 const std::vector<uint8_t>& CaffParser::Frame::ciffMagic() {

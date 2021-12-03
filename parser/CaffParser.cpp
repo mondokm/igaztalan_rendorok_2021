@@ -134,7 +134,7 @@ CaffParser::Block::Block(
         throw std::runtime_error("Integrity check failed: block size mismatch");
 
     if (type == Type::header)
-        if (data.size() < 4 || std::vector<uint8_t>(&this->data[0], &this->data[4]) != caffMagic()) {
+        if (this->data.size() < 4 || std::vector<uint8_t>(&this->data[0], &this->data[4]) != caffMagic()) {
             throw std::runtime_error("Integrity check failed: CAFF magic missing in header block");
         }
 }

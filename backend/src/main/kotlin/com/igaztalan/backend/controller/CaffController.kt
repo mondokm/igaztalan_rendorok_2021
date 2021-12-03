@@ -97,7 +97,7 @@ class CaffController(
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    fun delete(@PathVariable id: Long) = caffRepository.deleteById(id)
+    fun delete(@PathVariable id: Long) = caffRepository.findById(id).map { caffRepository::delete }
 
     @GetMapping("/find")
     fun search(@RequestParam keyword: String) =

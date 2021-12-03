@@ -9,23 +9,34 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var mainViewModel: MainViewModel
+    private let galleryView = GalleryView(galleryViewModel: GalleryViewModel())
+    private let searchView = SearchView(searchViewModel: SearchViewModel())
+    private let uploadView = UploadView(uploadViewModel: UploadViewModel())
+    private let administratorView = AdministratorView(administratorViewModel: AdministratorViewModel())
 
     var body: some View {
         TabView {
-            GalleryView(galleryViewModel: GalleryViewModel())
+            galleryView
                 .tabItem {
                     Label("Gallery", systemImage: "photo.on.rectangle.angled")
                 }
 
-            SearchView(searchViewModel: SearchViewModel())
+            searchView
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass.circle")
                 }
 
-            UploadView(uploadViewModel: UploadViewModel())
+            uploadView
                 .tabItem {
                     Label("Upload", systemImage: "square.and.arrow.up")
                 }
+
+            if AppData.shared.isAdmin == true {
+                administratorView
+                    .tabItem {
+                        Label("Change", systemImage: "globe")
+                    }
+            }
         }
     }
 }

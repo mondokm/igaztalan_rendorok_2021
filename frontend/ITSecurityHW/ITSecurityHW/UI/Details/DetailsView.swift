@@ -28,12 +28,19 @@ struct DetailsView: View {
                 } label: {
                     Image(systemName: "plus.message.fill")
                 }
-                Button {
-                    detailViewModel.delete(imageId: detailViewModel.image._id) {
-                        presentationMode.wrappedValue.dismiss()
+                if AppData.shared.isAdmin == true {
+                    Button {
+                        detailViewModel.delete(imageId: image._id) {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        Image(systemName: "trash")
                     }
+                }
+                Button {
+                    detailViewModel.getFullImage(imageId: detailViewModel.image._id)
                 } label: {
-                    Image(systemName: "trash")
+                    Image(systemName: "square.and.arrow.down.fill")
                 }
             }
             .padding()
@@ -62,6 +69,7 @@ struct DetailsView: View {
             .listStyle(.plain)
             .padding()
         }
+        .animation(.linear(duration: 0.25), value: isCommentActive)
         .onAppear {
             detailViewModel.refreshImageDetails(imageId: image._id)
         }

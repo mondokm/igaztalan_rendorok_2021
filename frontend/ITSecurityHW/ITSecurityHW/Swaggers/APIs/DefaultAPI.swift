@@ -259,7 +259,7 @@ open class DefaultAPI {
      - parameter user: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func loginPost(user: LoginRegistrationBody? = nil, completion: @escaping ((_ data: String?,_ error: Error?) -> Void)) {
+    open class func loginPost(user: LoginRegistrationBody? = nil, completion: @escaping ((_ data: LoginResponse?,_ error: Error?) -> Void)) {
         loginPostWithRequestBuilder(user: user).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -268,23 +268,20 @@ open class DefaultAPI {
 
     /**
      - POST /login
-     - examples: [{contentType=application/json, example={
-  "bytes": [],
-  "empty": true
-}}]
+     - examples: [{contentType=application/json, example={"empty": false}}]
      
      - parameter user: (body)  (optional)
 
-     - returns: RequestBuilder<String> 
+     - returns: RequestBuilder<LoginResponse> 
      */
-    open class func loginPostWithRequestBuilder(user: LoginRegistrationBody? = nil) -> RequestBuilder<String> {
+    open class func loginPostWithRequestBuilder(user: LoginRegistrationBody? = nil) -> RequestBuilder<LoginResponse> {
         let path = "/login"
         let URLString = SwaggerClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: user)
 
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<String>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<LoginResponse>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }

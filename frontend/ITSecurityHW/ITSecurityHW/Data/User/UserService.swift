@@ -19,7 +19,40 @@ extension UserService: UserActionProtocol {
         Future { completable in
             self.userCache.clear()
             self.tokenCache.clear()
+            AppData.shared.token = nil
+            AppData.shared.isAdmin = nil
+            AppData.shared.id = nil
             completable(.success(()))
+        }.eraseToAnyPublisher()
+    }
+
+    func change(id: Int, userName: String, password: String) -> AnyPublisher<Void, Never> {
+        Future { completable in
+            DefaultAPI.userIdPutWithRequestBuilder(_id: id, user: RegistrationModel(name: userName, password: password))
+                .addToken()
+                .execute { data, error in
+                    if let data = data {
+                        Self.log(data)
+                    } else {
+                        Self.log(error)
+                    }
+                    completable(.success(()))
+                }
+        }.eraseToAnyPublisher()
+    }
+
+    func delete(id: Int) -> AnyPublisher<Void, Never> {
+        Future { completable in
+            DefaultAPI.userIdDeleteWithRequestBuilder(_id: id)
+                .addToken()
+                .execute { data, error in
+                    if let data = data {
+                        Self.log(data)
+                    } else {
+                        Self.log(error)
+                    }
+                    completable(.success(()))
+                }
         }.eraseToAnyPublisher()
     }
 
@@ -27,8 +60,10 @@ extension UserService: UserActionProtocol {
         Future { completable in
             DefaultAPI.loginPost(user: LoginRegistrationBody(password: password, name: name)) { data, error in
                 if let data = data {
-                    AppData.shared.token = data
-                    self.tokenCache.save(item: data)
+                    AppData.shared.token = data.token
+                    AppData.shared.isAdmin = data.isAdmin == 1
+                    AppData.shared.id = data.userId
+                    self.tokenCache.save(item: data.token)
                     Self.log(data)
                 } else {
                     Self.log(error)
@@ -42,13 +77,28 @@ extension UserService: UserActionProtocol {
         Future { [weak self] completable in
             DefaultAPI.userSignUpPost(user: LoginRegistrationBody(password: password, name: name)) { data, error in
                 if let data = data {
-                    self!.userCache.save(item: data)
+                    self?.userCache.save(item: data)
                     AppData.shared.id = data._id
                     Self.log(data)
+
+                    DefaultAPI.loginPost(user: LoginRegistrationBody(password: password, name: name)) { data, error in
+                        if let data = data {
+                            AppData.shared.token = data.token
+                            AppData.shared.isAdmin = data.isAdmin == 1
+                            AppData.shared.id = data.userId
+                            self?.tokenCache.save(item: data.token)
+                            Self.log(data)
+                        } else {
+                            Self.log(error)
+                        }
+                        completable(.success(()))
+                    }
+
                 } else {
                     Self.log(error)
+                    completable(.success(()))
                 }
-                completable(.success(()))
+
             }
         }.eraseToAnyPublisher()
     }

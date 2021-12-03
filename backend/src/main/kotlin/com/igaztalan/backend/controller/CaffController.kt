@@ -9,7 +9,6 @@ import com.igaztalan.backend.repositories.UserRepository
 import com.igaztalan.backend.repositories.CaffRepository
 import com.igaztalan.backend.repositories.CommentRepository
 import com.igaztalan.backend.util.*
-import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*

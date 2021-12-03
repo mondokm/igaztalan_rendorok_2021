@@ -2,7 +2,6 @@ package com.igaztalan.backend.mapper
 
 import com.igaztalan.backend.entities.CommentEntity
 import com.igaztalan.backend.model.CommentDTO
-import com.igaztalan.backend.model.CommentUploadDTO
 import org.springframework.stereotype.Component
 
 @Component

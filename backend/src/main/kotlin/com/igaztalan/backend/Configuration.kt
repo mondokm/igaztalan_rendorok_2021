@@ -1,10 +1,16 @@
 package com.igaztalan.backend
 
-import org.passay.*
+
+import org.passay.CharacterRule
+import org.passay.LengthRule
+import org.passay.PasswordValidator
+import org.passay.WhitespaceRule
+import org.passay.IllegalSequenceRule
+import org.passay.EnglishCharacterData
+import org.passay.EnglishSequenceData
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class Configuration {

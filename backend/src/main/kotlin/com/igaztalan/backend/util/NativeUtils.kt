@@ -49,7 +49,7 @@ fun saveCaffAndPreview(base64Caff: String, id: Long): Int {
 
     runParser(inputPath, outputPath)
 
-    return 0;
+    return 0
 }
 
 fun readCaff(id: Long): String {

@@ -1,6 +1,5 @@
 package com.igaztalan.backend.security
 
-import com.igaztalan.backend.entities.UserEntity
 import com.igaztalan.backend.repositories.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User

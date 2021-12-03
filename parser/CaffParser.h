@@ -20,6 +20,7 @@ protected:
     public:
         [[nodiscard]] Type getType() const;
         [[nodiscard]] const std::vector<uint8_t> &getData() const;
+        static Type fromInt(unsigned int);
     };
     struct Frame {
         static const std::vector<uint8_t>& ciffMagic();

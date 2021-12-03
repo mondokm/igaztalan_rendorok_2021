@@ -10,12 +10,10 @@ import com.igaztalan.backend.security.SecurityConstants.ROLE_USER
 import com.igaztalan.backend.util.toNullable
 import org.passay.PasswordData
 import org.passay.PasswordValidator
-import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
-import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("/user")
@@ -61,7 +59,7 @@ class UserController(
             comments = userEntity.comments
         )
         userRepository.deleteById(id)
-        newUserEntity.id = id;
+        newUserEntity.id = id
         return ResponseEntity.ok(userRepository.save(newUserEntity).let{userMapper.mapToBusiness(it)})
     }
 

@@ -8,6 +8,15 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>79.120.160.221:8080</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>217.197.189.128:8080</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>

@@ -11,4 +11,5 @@ final class AppData {
 
     @Storage(key: .token) var token: String?
     @Storage(key: .id) var id: Int?
+    @Storage(key: .isAdmin) var isAdmin: Bool?
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GalleryView: View {
     @ObservedObject var galleryViewModel: GalleryViewModel
+    private let detailsViewModel = DetailsViewModel()
 
     var body: some View {
         NavigationView {
@@ -16,7 +17,7 @@ struct GalleryView: View {
                 VStack {
                     ForEach($galleryViewModel.images) { image in
                         NavigationLink {
-                            DetailsView(detailViewModel: DetailsViewModel(), image: image.wrappedValue)
+                            DetailsView(detailViewModel: detailsViewModel, image: image.wrappedValue)
                         } label: {
                             VStack {
                                 AnimatedImage2(base64: image.base64Preview)

@@ -8,6 +8,7 @@
 enum SettingsKey: String {
     case token
     case id
+    case isAdmin
 
     var keyName: String {
         rawValue

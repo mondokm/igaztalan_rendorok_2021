@@ -36,6 +36,28 @@ extension ViewModel {
             .store(in: &cancellables)
     }
 
+    func delete(id: Int, completion: @escaping () -> Void = { }) {
+        isNotLoading = false
+        userAction
+            .delete(id: id)
+            .sink { _ in
+                self.isNotLoading = true
+                completion()
+            }
+            .store(in: &cancellables)
+    }
+
+    func change(id: Int, name: String, password: String, completion: @escaping () -> Void = { }) {
+        isNotLoading = false
+        userAction
+            .change(id: id, userName: name, password: password)
+            .sink { _ in
+                self.isNotLoading = true
+                completion()
+            }
+            .store(in: &cancellables)
+    }
+
     func logOut(completion: @escaping () -> Void = { }) {
         isNotLoading = false
         userAction

@@ -35,7 +35,7 @@ struct LoginView: View {
             let randomName = UUID().uuidString
             let imageName = UUID().uuidString
             let keywords = [UUID().uuidString, UUID().uuidString, UUID().uuidString, UUID().uuidString]
-            let password = "tesztJelszo"
+            let password = "abCD12@#"
             print("name: \(randomName)")
             let caff1 = readCaffFile(nameWithoutExtension: "3")!
             loginViewModel.signUp(name: randomName, password: password) {

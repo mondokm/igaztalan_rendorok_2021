@@ -44,7 +44,12 @@ class UserController(
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    fun delete(@PathVariable id: Long) = userRepository.findById(id).map { userRepository::delete }
+    fun delete(@PathVariable id: Long): ResponseEntity<*> {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        }
+        return ResponseEntity.ok("ok")
+    }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
